@@ -1,3 +1,4 @@
+require('newrelic');
 import * as express from 'express';
 import { init, PORT } from './app';
 import { log } from 'winston';

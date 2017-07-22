@@ -12,7 +12,6 @@ import {parseEventString, Event} from './events/parser';
 export const PORT: number = parseInt(process.env.PORT) || 3000;
 
 export function init() {
-  require('newrelic');
   let confirmed = false;
   // these should be injected into init;
   // discord_client should be set up with listeners before being
