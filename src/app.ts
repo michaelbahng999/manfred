@@ -23,9 +23,9 @@ export function init() {
   server.use(body_parser.urlencoded({ extended: true }));
   server.use(body_parser.json());
   server.use(express_validator());
-  if (process.env.NODE_ENV !== 'production') {
+  // if (process.env.NODE_ENV !== 'production') {
     server.disable('etag');
-  }
+  // }
 
   // Discord config
   let discord_token;
@@ -40,6 +40,7 @@ export function init() {
     const channel = discord_client.channels.get('338185682386288641');
   });
   discord_client.on('guildMemberAdd', member => {
+    log('info', 'Bot is greeting new member');
     member.send('Welcome to the test channel. Try "manfred help".');
   });
   discord_client.on('message', message => {
@@ -48,14 +49,21 @@ export function init() {
         msg_string.toLowerCase().startsWith("von karma");
     };
     
-    if (message.author.id === discord_client.user.id) return;
+    if (message.author.id === discord_client.user.id) {
+      log('info', 'same id.');
+      return;
+    }
     // non-commands
-    if (!has_prefix(message.content)) return;
+    if (!has_prefix(message.content)) {
+      log('info', 'Not for manfred.');
+      return;
+    }
     message.content = message.content.replace('manfred ', '');
     message.content = message.content.replace('von karma ', '');
     message.content = message.content.trim();
 
     if (message.content.startsWith('help')) {
+      log('info', 'Sending help message.');
       message.author.send('Tsk tsk tsk... you ask me for help?')
       .then(() => message.author.send(
         ["I am still in alpha stage. Some commands:```",
