@@ -9,7 +9,7 @@ import { Client, Message, WebhookClient } from 'discord.js';
 import { log } from 'winston';
 
 import {parseEventString, Event} from './events/parser';
-export const PORT = 3000;
+export const PORT = 3000 || process.env.PORT;
 
 export function init() {
   // these should be injected into init;
