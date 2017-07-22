@@ -71,7 +71,11 @@ export function init() {
       return;
     }
     message.content = message.content.replace('manfred ', '');
+    message.content = message.content.replace('Manfred ', '');
     message.content = message.content.replace('von karma ', '');
+    message.content = message.content.replace('Von karma ', '');
+    message.content = message.content.replace('von Karma ', '');
+    message.content = message.content.replace('Von Karma ', '');
     message.content = message.content.trim();
 
     if (message.content.startsWith('help')) {
