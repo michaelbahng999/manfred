@@ -1,0 +1,30 @@
+{
+  "name": "manfred",
+  "version": "0.0.1",
+  "description": "alfred's older brother",
+  "scripts": {
+    "start": "yarn watch",
+    "watch": "nodemon -e ts -w ./src -x yarn watch:dev",
+    "watch:dev": "ts-node --inspect src/index.ts"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "discord.js": "^11.1.0",
+    "express": "^4.15.3",
+    "express-validator": "^3.2.1",
+    "knex": "^0.13.0",
+    "pg": "^7.0.2",
+    "ts-node": "^3.2.1",
+    "typescript": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.16.4",
+    "@types/express": "^4.0.36",
+    "@types/express-validator": "^3.0.0",
+    "@types/knex": "^0.0.56",
+    "@types/node": "^8.0.14",
+    "@types/winston": "^2.3.3",
+    "nodemon": "^1.11.0",
+    "winston": "^2.3.1"
+  }
+}

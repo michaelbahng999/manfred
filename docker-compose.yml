@@ -1,0 +1,12 @@
+version: '2'
+services:
+  alfred_db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=username
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=alfred_dev_db
+    volumes:
+      - /var/lib/postgresql/data
