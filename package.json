@@ -15,6 +15,14 @@
     "build": "rm -rf dist/ && tsc"
   },
   "dependencies": {
+    "@types/body-parser": "^1.16.4",
+    "@types/express": "^4.0.36",
+    "@types/express-validator": "^3.0.0",
+    "@types/knex": "^0.0.56",
+    "@types/lodash": "^4.14.70",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^8.0.14",
+    "@types/winston": "^2.3.3",
     "body-parser": "^1.17.2",
     "chrono-node": "^1.3.4",
     "discord.js": "^11.1.0",
@@ -27,18 +35,10 @@
     "sherlockjs": "^1.3.7",
     "ts-node": "^3.2.1",
     "typescript": "^2.4.2",
-    "typestate": "^1.0.4"
+    "typestate": "^1.0.4",
+    "winston": "^2.3.1"
   },
   "devDependencies": {
-    "@types/body-parser": "^1.16.4",
-    "@types/express": "^4.0.36",
-    "@types/express-validator": "^3.0.0",
-    "@types/knex": "^0.0.56",
-    "@types/lodash": "^4.14.70",
-    "@types/moment": "^2.13.0",
-    "@types/node": "^8.0.14",
-    "@types/winston": "^2.3.3",
-    "nodemon": "^1.11.0",
-    "winston": "^2.3.1"
+    "nodemon": "^1.11.0"
   }
 }
