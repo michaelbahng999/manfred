@@ -31,6 +31,7 @@ users_router.get('/:uid', (req, res) => {
 api_v1.use('/users', users_router);
 
 app.server.use('/api/v1', api_v1);
+log('info', `Port is ${PORT}`);
 app.server.listen(PORT, () => {
   log('info', `Server started on port ${PORT}`);
 });
