@@ -123,11 +123,11 @@ export function init() {
             if (!confirmed) {
               if(msg.content.toLowerCase() === 'yes') {
                 confirmed = true;
-                msg.channel.send("Well, I can't save this yet so too bad.");
+                message.channel.send("Well, I can't save this yet so too bad.");
               }
               else if (msg.content.toLowerCase() === 'no') {
                 confirmed = true;
-                msg.channel.send("Hah, it would have been a waste of time anyway.");
+                message.channel.send("Hah, it would have been a waste of time anyway.");
               }
             }
           })
