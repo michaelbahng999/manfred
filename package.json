@@ -1,6 +1,9 @@
 {
   "name": "manfred",
   "version": "0.0.1",
+  "engines": {
+    "node": "8.2.1"
+  },
   "description": "Amazing prosecutor, mediocre butler",
   "scripts": {
     "dev": "NODE_ENV=development yarn watch",
