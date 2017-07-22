@@ -12,6 +12,7 @@ import {parseEventString, Event} from './events/parser';
 export const PORT: number = parseInt(process.env.PORT) || 3000;
 
 export function init() {
+  let confirmed = false;
   // these should be injected into init;
   // discord_client should be set up with listeners before being
   // used as a dependency.
@@ -54,6 +55,17 @@ export function init() {
       return;
     }
     // non-commands
+    if (!confirmed) {
+      confirmed = true;
+      log('info', 'toggled confirmed');
+      if(message.content.toLowerCase() === 'yes') {
+        message.channel.send("Well, I can't save this yet so too bad for you.");
+      }
+      else if (message.content.toLowerCase() === 'no') {
+        message.channel.send("Hah, it would have been a waste of time anyway.");
+      }
+    }
+
     if (!has_prefix(message.content)) {
       log('info', 'Not for manfred.');
       return;
@@ -118,24 +130,7 @@ export function init() {
       )
       .then(() => {
         message.channel.send('Will that do, fool? (yes/no)').then(() => {
-          let confirmed = false;
-          const thing = discord_client.on('message', msg => {
-            if (!confirmed) {
-              if(msg.content.toLowerCase() === 'yes') {
-                confirmed = true;
-                message.channel.send("Well, I can't save this yet so too bad.");
-              }
-              else if (msg.content.toLowerCase() === 'no') {
-                confirmed = true;
-                message.channel.send("Hah, it would have been a waste of time anyway.");
-              }
-            }
-          })
-          .setTimeout(() => {
-            if (!confirmed) {
-              message.channel.send("I will not tolerate you wasting my time. Your pathetic event has been cancelled!");
-            }
-          }, 10000);
+          confirmed = false;
         });
       });
     }
