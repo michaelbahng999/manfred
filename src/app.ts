@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { rollDie } from './dnd/dice';
 import { Client, Message, WebhookClient } from 'discord.js';
 import { log } from 'winston';
+import {TypeState} from 'typestate';
 
 import {parseEventString, Event} from './events/parser';
 export const PORT: number = parseInt(process.env.PORT) || 3000;
@@ -24,9 +25,9 @@ export function init() {
   server.use(body_parser.urlencoded({ extended: true }));
   server.use(body_parser.json());
   server.use(express_validator());
-  // if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     server.disable('etag');
-  // }
+  }
 
   // Discord config
   let discord_token;
@@ -46,8 +47,7 @@ export function init() {
   });
   discord_client.on('message', message => {
     const has_prefix = (msg_string: string) => {
-      return msg_string.toLowerCase().startsWith("manfred") ||
-        msg_string.toLowerCase().startsWith("von karma");
+      return msg_string.toLowerCase().startsWith("manfred");
     };
     
     if (message.author.id === discord_client.user.id) {
@@ -70,13 +70,8 @@ export function init() {
       log('info', 'Not for manfred.');
       return;
     }
+    message.content = message.content.toLowerCase().trim();
     message.content = message.content.replace('manfred ', '');
-    message.content = message.content.replace('Manfred ', '');
-    message.content = message.content.replace('von karma ', '');
-    message.content = message.content.replace('Von karma ', '');
-    message.content = message.content.replace('von Karma ', '');
-    message.content = message.content.replace('Von Karma ', '');
-    message.content = message.content.trim();
 
     if (message.content.startsWith('help')) {
       log('info', 'Sending help message.');
@@ -85,25 +80,10 @@ export function init() {
         ["I am still in alpha stage. Some commands:```",
         '- "manfred help":                            Plead for help.',
         '- "manfred status":                          Check how long I have been running.',
-        '- "manfred roll a d<number>":                Roll a die.',
-        '- "manfred schedule <event>":                Schedule an event.',
         '```'
         ].join("\r\n")
       ));
       return;
-    }
-
-    log('info', `trimmedAndLow: ${message.content.toLowerCase().trim()}`);
-    if (message.content.toLowerCase().trim().startsWith('roll a d')) {
-      message.content = message.content.replace('roll a d', '');
-      const num = parseInt(message.content.split(' ')[0]);
-      if (isNaN(num)) {
-        message.channel.send('Does that look like a number to you?! Imbecile!');
-        return;
-      }
-      else {
-        message.channel.send(`Rolled a ${rollDie(num)}.`);
-      }
     }
 
     if (message.content.startsWith('status')) {
@@ -111,6 +91,7 @@ export function init() {
       message.channel.send(`Uptime: since ${moment().subtract(discord_client.uptime, 'milliseconds').fromNow()}`);
       return;
     }
+
     if (message.content.startsWith('schedule')) {
       const event: Event = parseEventString(message.content.replace('schedule ', ''));
       log('info', `Parsed event: ${JSON.stringify(event)}`);
@@ -145,7 +126,7 @@ export function init() {
     })
     .catch(err => {
       log('error', `Error logging into discord, ${err}`);
-      throw new Error();
+      throw err;
     });
   return {server, db, discord_client};
 }

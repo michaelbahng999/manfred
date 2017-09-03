@@ -9,6 +9,7 @@
     "start": "NODE_ENV=production node dist/index.js",
     "postinstall": "yarn migrate && yarn build",
     "migrate": "knex migrate:latest",
+    "migrate:make": "knex migrate:make --",
     "build": "rm -rf dist/ && tsc"
   },
   "dependencies": {
